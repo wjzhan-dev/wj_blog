@@ -4,15 +4,9 @@ import { createHighlighter } from "shiki";
 import type { ContentItem } from "@/lib/types";
 import { parseLiterateRaw } from "@/lib/literate";
 import type { Block } from "@/lib/literate";
+import { basePath } from "@/lib/basepath";
 
 const SCRIPTS_ROOT = path.join(process.cwd(), "public", "scripts");
-
-/** Extract basePath — matches the conditional logic in next.config.mjs */
-function getBasePath(): string {
-  // In GitHub Actions, the repo name becomes the base path
-  if (process.env.GITHUB_ACTIONS === "true") return "/wj_blog";
-  return "";
-}
 
 // Shiki highlighter singleton — loaded once at build time
 let _highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null;
@@ -97,8 +91,7 @@ export async function getLiterateBlocks(
       let src = b.src!;
       // Resolve relative paths (./ or ../) to public URL, accounting for basePath
       if (src.startsWith("./") || src.startsWith("../")) {
-        const basePath = getBasePath();
-        // Normalize: resolve the relative path, then strip the filesystem root
+// Normalize: resolve the relative path, then strip the filesystem root
         const resolved = path.resolve(
           path.join(SCRIPTS_ROOT, category, slug),
           src
@@ -203,7 +196,6 @@ export function getProjectImage(
 
   for (const file of fs.readdirSync(dirPath)) {
     if (exts.some((ext) => file.toLowerCase().endsWith(ext))) {
-      const basePath = getBasePath();
       return `${basePath}/scripts/${category}/${slug}/${file}`;
     }
   }

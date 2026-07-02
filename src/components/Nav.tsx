@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { basePath } from "@/lib/basepath";
 
 const links = [
   { href: "/", label: "Now" },
@@ -32,7 +33,7 @@ export default function Nav() {
           className="flex items-center gap-2.5 text-base font-semibold tracking-tight text-foreground hover:text-foreground/70 transition-colors shrink-0"
         >
           <Image
-            src="/avatars/avatar.jpeg"
+            src={`${basePath}/avatars/avatar.jpeg`}
             alt="Wenjing Zhan"
             width={36}
             height={36}

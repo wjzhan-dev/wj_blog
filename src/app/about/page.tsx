@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Mail, Code2, Briefcase } from "lucide-react";
 import PageHeader from "@/components/PageHeader";
 import RetroArcadeSandbox from "@/components/RetroArcadeSandbox";
+import { basePath } from "@/lib/basepath";
 
 const contacts = [
   {
@@ -81,7 +82,7 @@ export default function AboutPage() {
           </h2>
           <div className="rounded-2xl border border-border bg-card p-4">
             <Image
-              src="/K-Tree.svg"
+              src={`${basePath}/K-Tree.svg`}
               alt="Expertise knowledge tree"
               width={700}
               height={400}
