@@ -1,0 +1,7 @@
+{
+  "date": "2026-06",
+  "tags": ["Claude Code", "Design-to-Code", "AI Workflow"],
+  "status": "archived",
+  "title": "proposal generation platform",
+  "description": "This experimental project was built to test a cutting-edge Design-to-Code workflow using Claude Code. It delivers a streamlined, asynchronous full-stack SaaS platform that automates the entire B2B sales pipeline from a raw text description to a beautifully templated proposal, all the way to final checkout and secure payment"
+}
