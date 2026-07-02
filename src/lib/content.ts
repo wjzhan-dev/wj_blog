@@ -7,22 +7,11 @@ import type { Block } from "@/lib/literate";
 
 const SCRIPTS_ROOT = path.join(process.cwd(), "public", "scripts");
 
-/** Extract basePath from next.config at build time (injected by configure-pages action) */
+/** Extract basePath — matches the conditional logic in next.config.mjs */
 function getBasePath(): string {
-  try {
-    const cwd = process.cwd();
-    // Try .mjs first, then .ts (configure-pages works best with .mjs)
-    let configPath = path.join(cwd, "next.config.mjs");
-    if (!fs.existsSync(configPath)) {
-      configPath = path.join(cwd, "next.config.ts");
-    }
-    if (!fs.existsSync(configPath)) return "";
-    const content = fs.readFileSync(configPath, "utf-8");
-    const match = content.match(/basePath\s*:\s*["']([^"']+)["']/);
-    return match ? match[1] : "";
-  } catch {
-    return "";
-  }
+  // In GitHub Actions, the repo name becomes the base path
+  if (process.env.GITHUB_ACTIONS === "true") return "/wj_blog";
+  return "";
 }
 
 // Shiki highlighter singleton — loaded once at build time
