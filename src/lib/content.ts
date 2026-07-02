@@ -10,7 +10,12 @@ const SCRIPTS_ROOT = path.join(process.cwd(), "public", "scripts");
 /** Extract basePath from next.config at build time (injected by configure-pages action) */
 function getBasePath(): string {
   try {
-    const configPath = path.join(process.cwd(), "next.config.ts");
+    const cwd = process.cwd();
+    // Try .mjs first, then .ts (configure-pages works best with .mjs)
+    let configPath = path.join(cwd, "next.config.mjs");
+    if (!fs.existsSync(configPath)) {
+      configPath = path.join(cwd, "next.config.ts");
+    }
     if (!fs.existsSync(configPath)) return "";
     const content = fs.readFileSync(configPath, "utf-8");
     const match = content.match(/basePath\s*:\s*["']([^"']+)["']/);
@@ -101,10 +106,18 @@ export async function getLiterateBlocks(
     }
     if (b.type === "image") {
       let src = b.src!;
-      // Resolve relative paths (./ or ../) to public/scripts/... URLs
+      // Resolve relative paths (./ or ../) to public URL, accounting for basePath
       if (src.startsWith("./") || src.startsWith("../")) {
         const basePath = getBasePath();
-        src = path.join(basePath, "/scripts", category, slug, src);
+        // Normalize: resolve the relative path, then strip the filesystem root
+        const resolved = path.resolve(
+          path.join(SCRIPTS_ROOT, category, slug),
+          src
+        );
+        // Convert filesystem path back to public URL
+        const publicDir = path.join(process.cwd(), "public");
+        const relativeToPublic = path.relative(publicDir, resolved);
+        src = `${basePath}/${relativeToPublic}`;
       }
       return { type: "image", src, width: b.width };
     }
