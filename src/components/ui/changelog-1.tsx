@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -79,9 +80,9 @@ export const Changelog1 = ({
                 )}
                 {entry.button && (
                   <Button variant="link" className="mt-4 self-end" asChild>
-                    <a href={entry.button.url}>
+                    <Link href={entry.button.url}>
                       {entry.button.text} <ArrowUpRight className="h-4 w-4" />
-                    </a>
+                    </Link>
                   </Button>
                 )}
               </div>

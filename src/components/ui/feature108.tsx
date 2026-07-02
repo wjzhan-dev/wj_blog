@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -85,7 +86,7 @@ const Feature108 = ({
                     {tab.content.description}
                   </p>
                   <Button className="mt-2.5 w-fit gap-2" size="lg" asChild>
-                    <a href={tab.content.buttonHref}>{tab.content.buttonText}</a>
+                    <Link href={tab.content.buttonHref}>{tab.content.buttonText}</Link>
                   </Button>
                 </div>
                 <img
