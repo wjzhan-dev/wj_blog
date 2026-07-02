@@ -41,4 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 # claude
-.claude/
+.claude/list_src.sh
+tech-plan.md
