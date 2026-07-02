@@ -23,7 +23,7 @@ def main():
     text("- **Database & Auth**: Supabase (PostgreSQL) with Row-Level Security.")
     text("- **Monetization**: Stripe integration.")
     text("- **Development**: 100% developed and deployed through interactive prompts via the **Claude Code CLI**.")
-    image("./image1.jpg", width=700)
+    image("./image1.png", width=700)
 
 
 if __name__ == "__main__":
