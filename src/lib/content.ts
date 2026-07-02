@@ -7,6 +7,19 @@ import type { Block } from "@/lib/literate";
 
 const SCRIPTS_ROOT = path.join(process.cwd(), "public", "scripts");
 
+/** Extract basePath from next.config at build time (injected by configure-pages action) */
+function getBasePath(): string {
+  try {
+    const configPath = path.join(process.cwd(), "next.config.ts");
+    if (!fs.existsSync(configPath)) return "";
+    const content = fs.readFileSync(configPath, "utf-8");
+    const match = content.match(/basePath\s*:\s*["']([^"']+)["']/);
+    return match ? match[1] : "";
+  } catch {
+    return "";
+  }
+}
+
 // Shiki highlighter singleton — loaded once at build time
 let _highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null;
 
@@ -90,7 +103,8 @@ export async function getLiterateBlocks(
       let src = b.src!;
       // Resolve relative paths (./ or ../) to public/scripts/... URLs
       if (src.startsWith("./") || src.startsWith("../")) {
-        src = path.join("/scripts", category, slug, src);
+        const basePath = getBasePath();
+        src = path.join(basePath, "/scripts", category, slug, src);
       }
       return { type: "image", src, width: b.width };
     }
@@ -187,7 +201,8 @@ export function getProjectImage(
 
   for (const file of fs.readdirSync(dirPath)) {
     if (exts.some((ext) => file.toLowerCase().endsWith(ext))) {
-      return `/scripts/${category}/${slug}/${file}`;
+      const basePath = getBasePath();
+      return `${basePath}/scripts/${category}/${slug}/${file}`;
     }
   }
 
