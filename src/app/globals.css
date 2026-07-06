@@ -90,6 +90,19 @@ html {
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+/* Prevent media from overflowing on mobile */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Code blocks scroll horizontally within their container */
+pre {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 /* ──────────────────────────────
@@ -126,19 +139,6 @@ body {
   30% { opacity: 1; transform: translateY(-16px) scale(1); }
   60% { opacity: 0.5; transform: translateY(-30px) scale(0.6); }
   100% { opacity: 0; transform: translateY(-50px) scale(0.3); }
-}
-
-@keyframes retro-shake {
-  0%, 100% { transform: translateX(0); }
-  10% { transform: translateX(-3px); }
-  20% { transform: translateX(3px); }
-  30% { transform: translateX(-2px); }
-  40% { transform: translateX(2px); }
-  50% { transform: translateX(-4px); }
-  60% { transform: translateX(4px); }
-  70% { transform: translateX(-2px); }
-  80% { transform: translateX(2px); }
-  90% { transform: translateX(-1px); }
 }
 
 @keyframes heart-1d {

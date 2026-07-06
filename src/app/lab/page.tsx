@@ -11,7 +11,7 @@ import {
 const labEntries: ChangelogEntry[] = labProjects.map((project) => {
   const code = getPythonContent("Lab", project.slug);
   const paragraph = getFirstParagraph(code) || project.description;
-  const image = getProjectImage("Lab", project.slug) ?? undefined;
+  const image = getProjectImage("Lab", project.slug, project.image) ?? undefined;
   const version =
     getArchiveStatus("Lab", project.slug) ??
     (project.status

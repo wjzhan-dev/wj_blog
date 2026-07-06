@@ -11,7 +11,7 @@ import {
 const buildEntries: ChangelogEntry[] = builds.map((build) => {
   const code = getPythonContent("Builds", build.slug);
   const paragraph = getFirstParagraph(code) || build.description;
-  const image = getProjectImage("Builds", build.slug) ?? undefined;
+  const image = getProjectImage("Builds", build.slug, build.image) ?? undefined;
   const version =
     getArchiveStatus("Builds", build.slug) ??
     (build.status

@@ -14,7 +14,7 @@ const toolTabs: Tab[] = [
         "Deep context understanding, multi-file edits, and test generation. Claude Code explores entire codebases, proposes architectural plans, and self-corrects based on test output — more like pair programming than writing prompts.",
       buttonText: "View details",
       buttonHref: "/tools/claude-code-tool/",
-      imageSrc: getProjectImage("Tools", "claude-code-tool") ?? "",
+      imageSrc: getProjectImage("Tools", "claude-code-tool", undefined) ?? "",
       imageAlt: "Claude Code",
     },
   },

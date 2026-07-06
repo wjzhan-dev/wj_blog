@@ -12,7 +12,7 @@ export default function ResourcesPage() {
 
       <div className="divide-y divide-border border-t border-border">
         {resources.map((resource) => (
-          <ThoughtCard key={resource.slug} thought={resource} />
+          <ThoughtCard key={resource.slug} thought={resource} baseHref="/resources/" />
         ))}
       </div>
     </div>

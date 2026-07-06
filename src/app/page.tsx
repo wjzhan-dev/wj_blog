@@ -3,7 +3,7 @@ import type { Tab } from "@/components/ui/feature108";
 import { labProjects } from "@/data/lab";
 import { builds } from "@/data/builds";
 import { thoughts } from "@/data/thoughts";
-import { currentReading } from "@/data/now";
+import { resources } from "@/data/resources";
 import {
   getLatest,
   getLatestAcross,
@@ -22,20 +22,23 @@ const latestProject = latestProjectResult.item;
 const projectSource = latestProjectResult.sourceIndex === 0 ? "lab" : "builds";
 const projectImg = getProjectImage(
     projectSource === "lab" ? "Lab" : "Builds",
-    latestProject.slug
+    latestProject.slug,
+    latestProject.image
   ) ?? "";
 const projectPara =
   getFirstParagraph(
     getPythonContent(projectSource === "lab" ? "Lab" : "Builds", latestProject.slug)
   ) || latestProject.description;
 
-const latestThought = getLatest(thoughts)!;
-const thoughtImg = getProjectImage("Thoughts", latestThought.slug) ?? "";
-const thoughtPara =
-  getFirstParagraph(getPythonContent("Thoughts", latestThought.slug)) ||
-  latestThought.description;
+const latestThought = getLatest(thoughts);
+const thoughtImg = latestThought
+  ? (getProjectImage("Thoughts", latestThought.slug, latestThought.image) ?? "")
+  : "";
+const thoughtPara = latestThought
+  ? (getFirstParagraph(getPythonContent("Thoughts", latestThought.slug)) || latestThought.description)
+  : "";
 
-const latestReading = currentReading[0];
+const latestReading = resources[0];
 
 /* ── Build tabs dynamically ── */
 
@@ -64,8 +67,8 @@ const nowTabs: Tab[] = [
       title: latestReading.title,
       description: latestReading.description,
       buttonText: "View Resources",
-      buttonHref: "/resources/resources/",
-      imageSrc: "/scripts/Resources/resources/image.jpg",
+      buttonHref: `/resources/${latestReading.slug}/`,
+      imageSrc: getProjectImage("Resources", latestReading.slug, latestReading.image) ?? "",
       imageAlt: "Current reading and resources",
     },
   },
@@ -75,12 +78,12 @@ const nowTabs: Tab[] = [
     label: "Quick Thought",
     content: {
       badge: "Thinking",
-      title: latestThought.title,
+      title: latestThought?.title ?? "Latest Thought",
       description: thoughtPara,
       buttonText: "Read More",
-      buttonHref: `/thoughts/${latestThought.slug}/`,
+      buttonHref: latestThought ? `/thoughts/${latestThought.slug}/` : "/thoughts/",
       imageSrc: thoughtImg,
-      imageAlt: latestThought.title,
+      imageAlt: latestThought?.title ?? "Thought",
     },
   },
 ];

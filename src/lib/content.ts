@@ -7,6 +7,7 @@ import type { Block } from "@/lib/literate";
 import { basePath } from "@/lib/basepath";
 
 const SCRIPTS_ROOT = path.join(process.cwd(), "public", "scripts");
+const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 // Shiki highlighter singleton — loaded once at build time
 let _highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null;
@@ -97,8 +98,7 @@ export async function getLiterateBlocks(
           src
         );
         // Convert filesystem path back to public URL
-        const publicDir = path.join(process.cwd(), "public");
-        const relativeToPublic = path.relative(publicDir, resolved);
+        const relativeToPublic = path.relative(PUBLIC_DIR, resolved);
         src = `${basePath}/${relativeToPublic}`;
       }
       return { type: "image", src, width: b.width };
@@ -182,13 +182,36 @@ export function getFirstParagraph(code: string): string {
 }
 
 /**
- * Find an image file inside a project folder.
- * Looks for common image extensions, returns the public path.
+ * Find an image for a project.
+ * 1. If metaImage (from meta.json) is provided, use it directly.
+ *    - Absolute URLs (https://...) pass through as-is.
+ *    - Relative paths (./image.jpg) are resolved to public/scripts/... URLs.
+ * 2. Otherwise, scan the project folder for the first image file.
  */
 export function getProjectImage(
   category: string,
-  slug: string
+  slug: string,
+  metaImage?: string
 ): string | null {
+  // Priority 1: meta.json image field
+  if (metaImage) {
+    if (metaImage.startsWith("http://") || metaImage.startsWith("https://")) {
+      return metaImage;
+    }
+    if (metaImage.startsWith("./") || metaImage.startsWith("../")) {
+      const resolved = path.resolve(
+        path.join(SCRIPTS_ROOT, category, slug),
+        metaImage
+      );
+      const relativeToPublic = path.relative(PUBLIC_DIR, resolved);
+      if (!relativeToPublic.startsWith("..")) {
+        return `${basePath}/${relativeToPublic}`;
+      }
+    }
+    return metaImage;
+  }
+
+  // Priority 2: scan project folder for first image file
   const dirPath = path.join(SCRIPTS_ROOT, category, slug);
   const exts = [".png", ".jpg", ".jpeg", ".webp", ".gif"];
 

@@ -126,7 +126,7 @@ function ImageBlock({ src, width }: { src: string; width?: number }) {
         src={src}
         alt=""
         className="max-w-full"
-        style={width ? { maxWidth: width } : undefined}
+        style={width ? { maxWidth: `min(${width}px, 100%)` } : undefined}
       />
     </div>
   );

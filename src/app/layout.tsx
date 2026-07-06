@@ -35,9 +35,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var d = document.documentElement;
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                  d.classList.add('dark');
+                  document.documentElement.classList.add('dark');
                 }
               })();
             `,

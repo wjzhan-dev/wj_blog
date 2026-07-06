@@ -4,12 +4,13 @@ import type { ContentItem } from "@/lib/types";
 
 export const resources: ContentItem[] = [
   {
-    slug: "resources",
-    title: "Current Reading",
+    slug: "current-reading",
+    title: "code: the hidden language of computer hardware and software",
     description:
-      "Books, papers, and articles I'm currently reading and recommending.",
+      "Instead of bombarding the reader with dry circuits or abstract math, this book elegantly traces the historical and engineering lineage of how computers actually work.",
     date: "2026-07",
     tags: ["Reading", "Books", "Learning"],
     status: "active",
+    image: "https://upload.wikimedia.org/wikipedia/en/7/7f/Code_The_Hidden_Language_of_Computer_Hardware_and_Software.jpg",
   },
 ];

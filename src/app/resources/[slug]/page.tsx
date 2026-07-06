@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getLiterateBlocks } from "@/lib/content";
 import LiterateViewer from "@/components/LiterateViewer";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const { resources } = await import("@/data/resources");
   return resources.map((p) => ({ slug: p.slug }));

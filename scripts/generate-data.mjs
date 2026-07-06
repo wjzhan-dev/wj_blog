@@ -30,8 +30,8 @@ function extractTitle(pyContent) {
  * Handles both single-line and multi-line docstrings.
  */
 function extractDescription(pyContent) {
-  // Match from first """ to the closing """ — handles multi-line
-  const match = pyContent.match(/^"""(.*?)"""/s);
+  // Match the first """...""" block (anywhere, not just at start)
+  const match = pyContent.match(/"""(.*?)"""/s);
   if (match) {
     return match[1]
       .trim()
@@ -66,6 +66,7 @@ function formatItem(item, indent = 2) {
   lines.push(`${p}  date: ${JSON.stringify(item.date)},`);
   lines.push(`${p}  tags: [${item.tags.map((t) => JSON.stringify(t)).join(", ")}],`);
   if (item.status) lines.push(`${p}  status: ${JSON.stringify(item.status)},`);
+  if (item.image) lines.push(`${p}  image: ${JSON.stringify(item.image)},`);
   if (item.demo) lines.push(`${p}  demo: ${JSON.stringify(item.demo)},`);
   if (item.subtitle) lines.push(`${p}  subtitle: ${JSON.stringify(item.subtitle)},`);
   if (item.readingTime != null) lines.push(`${p}  readingTime: ${item.readingTime},`);
@@ -140,6 +141,7 @@ function processCategory(category) {
       date: meta.date,
       tags: meta.tags,
       status: meta.status,
+      image: meta.image,
       demo: meta.demo,
       subtitle: meta.subtitle,
       readingTime: meta.readingTime,

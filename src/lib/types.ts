@@ -5,6 +5,7 @@ export interface ContentItem {
   date: string;
   tags: string[];
   status?: "active" | "archived" | "wip";
+  image?: string;
   demo?: string;
   subtitle?: string;
   readingTime?: number;
