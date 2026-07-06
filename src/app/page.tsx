@@ -63,11 +63,10 @@ const nowTabs: Tab[] = [
       badge: "Reading",
       title: latestReading.title,
       description: latestReading.description,
-      buttonText: "Read Thoughts",
-      buttonHref: "/thoughts/",
-      imageSrc:
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&q=80",
-      imageAlt: "Stack of books on a wooden table",
+      buttonText: "View Resources",
+      buttonHref: "/resources/resources/",
+      imageSrc: "/scripts/Resources/resources/image.jpg",
+      imageAlt: "Current reading and resources",
     },
   },
   {

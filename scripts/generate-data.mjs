@@ -13,6 +13,7 @@ const CATEGORY_CONFIG = {
   Builds: { export: "builds" },
   Thoughts: { export: "thoughts" },
   Tools: { export: null }, // group-based: exports derived from meta.json `group` field
+  Resources: { export: "resources" },
 };
 
 /**
